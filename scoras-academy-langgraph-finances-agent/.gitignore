@@ -1,0 +1,5 @@
+duckdb.db
+credentials.json
+duckdb.db.wal
+.env
+__pycache__

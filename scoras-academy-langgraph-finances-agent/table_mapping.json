@@ -1,0 +1,308 @@
+{
+    "Meses": {
+        "table_name": "tb_meses",
+        "description": "Tabela que contém os meses dos anos.",
+        "columns": {
+            "Nome": {
+                "name": "nome",
+                "type": "TEXT",
+                "nullable": false,
+                "description": "Nome do mês no formato YYYY-MM. Exemplo 2025-01."
+            },
+            "Ano": {
+                "name": "ano",
+                "type": "INTEGER",
+                "nullable": false,
+                "description": "Ano do mês. Exemplo 2025."
+            },
+            "Mês": {
+                "name": "mes",
+                "type": "INTEGER",
+                "nullable": false,
+                "description": "Mês do ano. Exemplo 1 para Janeiro e 12 para Dezembro."
+            },
+            "Trimestre": {
+                "name": "trimestre",
+                "type": "INTEGER",
+                "nullable": false,
+                "description": "Trimestre do ano. Exemplo 1 para Q1, 2 para Q2."
+            },
+            "Semestre": {
+                "name": "semestre",
+                "type": "INTEGER",
+                "nullable": false,
+                "description": "Semestre do ano. Exemplo 1 para primeiro semestre, 2 para segundo semestre."
+            }
+        }
+    },
+    "Categorias": {
+        "table_name": "tb_categorias",
+        "description": "Tabela que contém as categorias de receitas e despesas.",
+        "columns": {
+            "Nome": {
+                "name": "nome",
+                "type": "TEXT",
+                "nullable": false,
+                "description": "Nome da categoria."
+            },
+            "Tipo": {
+                "name": "tipo",
+                "type": "TEXT",
+                "nullable": false,
+                "description": "Tipo da categoria. Exemplo: Receita ou Despesa."
+            },
+            "Área": {
+                "name": "area",
+                "type": "TEXT",
+                "nullable": false,
+                "description": "Área relacionada à categoria. Exemplo: Alimentação, Transporte, etc."
+            }
+        }
+    },
+    "Contas": {
+        "table_name": "tb_contas",
+        "description": "Tabela que contém as contas bancárias.",
+        "columns": {
+            "Nome": {
+                "name": "nome",
+                "type": "TEXT",
+                "nullable": false,
+                "description": "Nome da conta."
+            }
+        }
+    },
+    "Cartões": {
+        "table_name": "tb_cartoes",
+        "description": "Tabela que contém os cartões de crédito.",
+        "columns": {
+            "Nome": {
+                "name": "nome",
+                "type": "TEXT",
+                "nullable": false,
+                "description": "Nome do cartão de crédito."
+            }
+        }
+    },
+    "Metas": {
+        "table_name": "tb_metas",
+        "description": "Tabela que contém as metas e objetivos financeiros.",
+        "columns": {
+            "Nome": {
+                "name": "nome",
+                "type": "TEXT",
+                "nullable": false,
+                "description": "Nome da meta."
+            },
+            "Tipo": {
+                "name": "tipo",
+                "type": "TEXT",
+                "nullable": false,
+                "description": "Tipo da meta, podendo ser Objetivo ou Reserva. Objetivo é um tipo de meta no qual temos um valor a ser atingido para algum propósito. Reserva é um tipo de meta que visa guardar um valor para usos eventuais."
+            },
+            "Valor Alvo": {
+                "name": "valor_alvo",
+                "type": "DECIMAL",
+                "nullable": true,
+                "description": "Valor alvo da meta, ou seja, valor a ser atingido. Exemplo: 1000.00."
+            }
+        }
+    },
+    "Orçamento": {
+        "table_name": "tb_orcamento",
+        "description": "Tabela que contém o orçamento mensal dos anos por categoria.",
+        "columns": {
+            "Mês": {
+                "name": "mes",
+                "type": "TEXT",
+                "nullable": false,
+                "description": "Mês do ano no formato YYYY-MM. Exemplo 2025-01."
+            },
+            "Categoria": {
+                "name": "categoria",
+                "type": "TEXT",
+                "nullable": false,
+                "description": "Nome da categoria orçada."
+            },
+            "Valor": {
+                "name": "valor",
+                "type": "DECIMAL",
+                "nullable": false,
+                "description": "Valor orçado para a categoria no mês. Exemplo: 1000.00."
+            }
+        }
+    },
+    "Receitas": {
+        "table_name": "tb_receitas",
+        "description": "Tabela que contém as receitas mensais dos anos por categoria.",
+        "columns": {
+            "Realizado": {
+                "name": "realizado",
+                "type": "BOOLEAN",
+                "nullable": false,
+                "description": "Indica se a receita foi realizada ou não. Exemplo: true para realizado, false para não realizado."
+            },
+            "Mês": {
+                "name": "mes",
+                "type": "TEXT",
+                "nullable": false,
+                "description": "Mês do ano no formato YYYY-MM. Exemplo 2025-01."
+            },
+            "Categoria": {
+                "name": "categoria",
+                "type": "TEXT",
+                "nullable": false,
+                "description": "Nome da categoria que recebeu a receita."
+            },
+            "Conta": {
+                "name": "conta",
+                "type": "TEXT",
+                "nullable": false,
+                "description": "Nome da conta que recebeu a receita."
+            },
+            "Valor": {
+                "name": "valor",
+                "type": "DECIMAL",
+                "nullable": false,
+                "description": "Valor da receita. Exemplo: 1000.00."
+            },
+            "Observação": {
+                "name": "observacao",
+                "type": "TEXT",
+                "nullable": true,
+                "description": "Observações adicionais sobre a receita."
+            }
+        }
+    },
+    "Despesas": {
+        "table_name": "tb_despesas",
+        "description": "Tabela que contém as despesas mensais dos anos por categoria.",
+        "columns": {
+            "Realizado": {
+                "name": "realizado",
+                "type": "BOOLEAN",
+                "nullable": false,
+                "description": "Indica se a despesa foi realizada ou não. Exemplo: true para realizado, false para não realizado."
+            },
+            "Mês": {
+                "name": "mes",
+                "type": "TEXT",
+                "nullable": false,
+                "description": "Mês do ano no formato YYYY-MM. Exemplo 2025-01."
+            },
+            "Categoria": {
+                "name": "categoria",
+                "type": "TEXT",
+                "nullable": false,
+                "description": "Nome da categoria da despesa."
+            },
+            "Conta": {
+                "name": "conta",
+                "type": "TEXT",
+                "nullable": false,
+                "description": "Nome da conta que registrou a despesa."
+            },
+            "Cartão": {
+                "name": "cartao",
+                "type": "TEXT",
+                "nullable": true,
+                "description": "Nome do cartão utilizado para a despesa. Campo opcional."
+            },
+            "Meta": {
+                "name": "meta",
+                "type": "TEXT",
+                "nullable": true,
+                "description": "Nome da meta associada à despesa. Campo opcional."
+            },
+            "Valor": {
+                "name": "valor",
+                "type": "DECIMAL",
+                "nullable": false,
+                "description": "Valor da despesa. Exemplo: 1000.00."
+            },
+            "Observação": {
+                "name": "observacao",
+                "type": "TEXT",
+                "nullable": true,
+                "description": "Observações adicionais sobre a despesa."
+            }
+        }
+    },
+    "Depósito-Metas": {
+        "table_name": "tb_deposito_metas",
+        "description": "Tabela que contém os depósitos mensais dos anos por meta. Não é relacionado à receitas, mas sim a depósitos que são feitos para as metas.",
+        "columns": {
+            "Realizado": {
+                "name": "realizado",
+                "type": "BOOLEAN",
+                "nullable": false,
+                "description": "Indica se o depósito foi realizado ou não. Exemplo: true para realizado, false para não realizado."
+            },
+            "Mês": {
+                "name": "mes",
+                "type": "TEXT",
+                "nullable": false,
+                "description": "Mês do ano no formato YYYY-MM. Exemplo 2025-01."
+            },
+            "Meta": {
+                "name": "meta",
+                "type": "TEXT",
+                "nullable": false,
+                "description": "Nome da meta que recebeu o depósito."
+            },
+            "Valor": {
+                "name": "valor",
+                "type": "DECIMAL",
+                "nullable": false,
+                "description": "Valor do depósito. Exemplo: 1000.00."
+            },
+            "Observação": {
+                "name": "observacao",
+                "type": "TEXT",
+                "nullable": true,
+                "description": "Observações adicionais sobre o depósito."
+            }
+        }
+    },
+    "Transferências": {
+        "table_name": "tb_transferencias",
+        "description": "Tabela que contém as transferências mensais dos anos entre contas.",
+        "columns": {
+            "Realizado": {
+                "name": "realizado",
+                "type": "BOOLEAN",
+                "nullable": false,
+                "description": "Indica se a transferência foi realizada ou não. Exemplo: true para realizado, false para não realizado."
+            },
+            "Mês": {
+                "name": "mes",
+                "type": "TEXT",
+                "nullable": false,
+                "description": "Mês do ano no formato YYYY-MM. Exemplo 2025-01."
+            },
+            "Conta Origem": {
+                "name": "conta_origem",
+                "type": "TEXT",
+                "nullable": false,
+                "description": "Nome da conta de origem da transferência."
+            },
+            "Conta Destino": {
+                "name": "conta_destino",
+                "type": "TEXT",
+                "nullable": false,
+                "description": "Nome da conta de destino da transferência."
+            },
+            "Valor": {
+                "name": "valor",
+                "type": "DECIMAL",
+                "nullable": false,
+                "description": "Valor da transferência. Exemplo: 1000.00."
+            },
+            "Observação": {
+                "name": "observacao",
+                "type": "TEXT",
+                "nullable": true,
+                "description": "Observações adicionais sobre a transferência."
+            }
+        }
+    }
+}
