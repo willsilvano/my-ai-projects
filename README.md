@@ -1,8 +1,32 @@
 # Chatbot Financeiro - LangGraph Finances Agent
 
-Um assistente financeiro baseado em IA para gerenciar e consultar suas finanças pessoais. Este projeto utiliza LangGraph, DuckDB e integração com Google Sheets para fornecer um chatbot interativo que responde a perguntas sobre finanças pessoais.
+[![License](https://img.shields.io/badge/license-Apache_2.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Python](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/downloads/)
+[![Docker](https://img.shields.io/badge/docker-compose-blue.svg)](https://docs.docker.com/compose/)
+
+![Demonstração](docs/demo.png)
+
+## Sumário
+- [Visão Geral](#visão-geral)
+- [Pré-requisitos](#pré-requisitos)
+- [Configuração](#configuração)
+  - [Local](#opção-1-configuração-local)
+  - [Docker](#opção-2-configuração-com-docker)
+- [Uso](#uso)
+  - [Sem Docker](#iniciar-com-streamlit)
+  - [Com Docker](#executando-com-docker)
+- [Funcionalidades](#funcionalidades)
+- [Exemplos de Perguntas](#exemplos-de-perguntas)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+- [Modelos Suportados](#modelos-suportados)
+- [Contributing](#contributing)
+- [Troubleshooting](#troubleshooting)
+- [Demonstração](#demonstração)
+- [Licença](#licença)
 
 ## Visão Geral
+
+Um assistente financeiro baseado em IA para gerenciar e consultar suas finanças pessoais. Este projeto utiliza LangGraph, DuckDB e integração com Google Sheets para fornecer um chatbot interativo que responde a perguntas sobre finanças pessoais.
 
 Este projeto cria um agente de IA que:
 - Realiza consultas de dados financeiros através de linguagem natural
@@ -10,34 +34,52 @@ Este projeto cria um agente de IA que:
 - Armazena e consulta dados usando DuckDB
 - Fornece uma interface web interativa com Streamlit
 
-Link da planilha Google: [Planilha de Finanças](https://docs.google.com/spreadsheets/d/10JLZYfMoOpOpM1_53QnpeYR3jCngZjMSMPtyFwbFIbw/edit?usp=sharing)
+Link da planilha Google utilizada como exemplo para obter os dados: [Planilha de Finanças](https://docs.google.com/spreadsheets/d/10JLZYfMoOpOpM1_53QnpeYR3jCngZjMSMPtyFwbFIbw/edit?usp=sharing)
 
-## Requisitos
+## Pré-requisitos
 
 - Python 3.12 ou superior
 - Acesso ao Google Sheets API
 - Credenciais para o Google Sheets API
-- API key para os modelos de LLM (Groq, Google Gemini, ou Ollama local)
+- API key para os modelos de LLM (Groq, Google Gemini ou Ollama local)
+- Docker 24.0+ e Docker Compose 3.0+ (para execução containerizada)
 
 ## Configuração
 
 ### 1. Ambiente de Desenvolvimento
+
+Você pode escolher entre configurar um ambiente local ou utilizar Docker para execução do projeto.
+
+#### Opção 1: Configuração Local
 
 ```bash
 # Clone o repositório
 git clone [url-do-repositorio]
 cd scoras-academy-langgraph-finances-agent
 
-# Configure o ambiente Python
+# Método 1: Instalação com pip
 python -m venv venv
 source venv/bin/activate  # No Windows: venv\Scripts\activate
 
-# Método 1: Instalação com pip
+# Instale as dependências
 pip install -e .
 
 # Método 2: Instalação com UV (recomendado - mais rápido)
-curl -sSf https://install.ultraviolet.rs | sh
-uv pip install -e .
+curl -LsSf https://astral.sh/uv/install.sh | sh
+uv sync
+```
+
+#### Opção 2: Configuração com Docker
+
+Esta é a maneira mais simples de começar, pois todos os requisitos são gerenciados automaticamente:
+
+```bash
+# Clone o repositório
+git clone [url-do-repositorio]
+cd scoras-academy-langgraph-finances-agent
+
+# Configure as credenciais (veja seção 2 abaixo)
+# Certifique-se de que os arquivos credentials.json e .env estejam na pasta raiz
 ```
 
 ### 2. Configuração das Credenciais
@@ -84,13 +126,13 @@ Onde:
 
 ## Uso
 
-Para iniciar a aplicação:
+### Iniciar com Streamlit
 
 ```bash
 streamlit run src/app.py
 ```
 
-A aplicação vai inicializar na porta 8501 por padrão: http://localhost:8501
+A aplicação estará disponível em http://localhost:8501
 
 ### Executando com Docker
 
@@ -107,9 +149,11 @@ docker-compose logs -f
 docker-compose down
 ```
 
+Certifique-se de que os arquivos `credentials.json` e `.env` estejam na pasta raiz antes de executar os comandos acima.
+
 O Docker usa o gerenciador de pacotes UV para uma instalação mais rápida das dependências.
 
-### Funcionalidades
+## Funcionalidades
 
 - **Chatbot Interativo**: Faça perguntas em linguagem natural sobre seus dados financeiros
 - **Baixar Dados**: Atualize seus dados a partir do Google Sheets
@@ -136,6 +180,30 @@ O Docker usa o gerenciador de pacotes UV para uma instalação mais rápida das 
 - Ollama (local): qwen2.5:7b, granite3.3:8b, cogito:8b
 - Google Gemini: gemini-2.5-pro-exp, gemini-2.5-flash-preview
 - Groq: llama3-70b-8192, llama-4-scout-17b, llama-4-maverick-17b
+
+## Contributing
+
+Contribuições são bem-vindas! Para contribuir, siga:
+
+1. Fork deste repositório
+2. Crie uma branch: `git checkout -b feature/nova-funcionalidade`
+3. Realize suas alterações e commite: `git commit -m "Adicionar nova funcionalidade"`
+4. Envie para o repositório remoto: `git push origin feature/nova-funcionalidade`
+5. Abra um Pull Request
+
+Por favor, siga as práticas de codificação e testes antes de submeter.
+
+## Troubleshooting
+
+- Erro de credenciais: Verifique se `credentials.json` e `.env` existem na raiz e têm permissões corretas.
+- Porta em uso: Caso a porta 8501 esteja ocupada, passe `--server.port <outra_porta>` ao `streamlit run`.
+- Problemas de dependências: Remova o diretório `venv` e refaça a instalação ou reconstrua o container Docker.
+
+## Demonstração
+
+Clique na imagem abaixo para assistir ao vídeo de demonstração:
+
+[![Demonstração](docs/demo.png)](docs/video.webm)
 
 ## Licença
 

@@ -1,31 +1,39 @@
-FROM python:3.12-slim
+# -------------------------
+# Stage 1: Build com UV
+# -------------------------
+FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim AS builder
 
 WORKDIR /app
 
-# Instala dependências do sistema
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+# Define variáveis de ambiente para otimização
+ENV UV_COMPILE_BYTECODE=1 \
+    UV_LINK_MODE=copy
 
-# Instala UV - gerenciador de pacotes Python ultra rápido
-RUN curl -sSf https://install.ultraviolet.rs | sh
-ENV PATH="/root/.cargo/bin:${PATH}"
+# Copia arquivos necessários
+COPY pyproject.toml uv.lock ./
 
-# Copia os arquivos do projeto
-COPY pyproject.toml ./
-COPY uv.lock ./
+# Instala dependências sem as de desenvolvimento
+RUN uv sync --frozen --no-dev
+
+# -------------------------------
+# Stage 2: Imagem final leve
+# -------------------------------
+FROM python:3.12-slim-bookworm AS final
+
+WORKDIR /app
+
+# Copia ambiente virtual da build
+COPY --from=builder /app /app
+
+# Copia o restante do código da aplicação
 COPY table_mapping.json ./
 COPY src/ ./src/
+COPY .streamlit /app/.streamlit
 
-# Instala dependências usando UV
-RUN uv pip install -e .
+# Define ambiente virtual como padrão
+ENV VIRTUAL_ENV=/app/.venv
+ENV PATH="/app/.venv/bin:$PATH"
 
-# Volume para persistência de dados
-VOLUME /app/data
-
-# Porta para o Streamlit
 EXPOSE 8501
 
-# Comando para iniciar a aplicação
-CMD ["streamlit", "run", "src/app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+ENTRYPOINT ["streamlit", "run", "src/app.py", "--server.port=8501", "--server.address=0.0.0.0"]
