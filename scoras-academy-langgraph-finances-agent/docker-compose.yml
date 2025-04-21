@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  finances-agent:
+    build: .
+    container_name: finances-agent
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./credentials.json:/app/credentials.json:ro
+      - ./.env:/app/.env:ro
+      - ./data:/app/data
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
